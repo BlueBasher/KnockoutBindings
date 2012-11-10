@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@section scripts {
+    @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/jsapplibs")
+
+    <script type="text/javascript">
+        $(function () {
+            var mainViewModel = new MainViewModel();
+            ko.applyBindings(mainViewModel, $('.index-view').get(0));
+        });
+    </script>
+}
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>@ViewBag.Title.</h1>
+            </hgroup>
+        </div>
+    </section>
+}
+
+<div id="index-view">
+    <img style="height: 200px; width: 200px;" data-bind="imageLoader: {src: imageName, loadDelay: 3000, afterLoad: $root.imageLoaded}" />    
+</div>
