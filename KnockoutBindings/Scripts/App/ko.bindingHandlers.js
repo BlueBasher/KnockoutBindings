@@ -51,3 +51,54 @@
         settings.loadDelay || 100);
     }
 };
+
+// Binding that can be used for displaying an Activity overlay
+ko.bindingHandlers.activityOverlay = {
+    init: function (element, valueAccessor, allBindingsAccessor) {
+    },
+    update: function (element, valueAccessor, allBindingsAccessor) {
+
+        var $element = $(element);
+        var value = valueAccessor();
+        var unwrappedValue = ko.utils.unwrapObservable(value);
+
+        if ($.isFunction($element.activity)) {
+            if (unwrappedValue) {
+                $element.before('<div class="busyIndicator"></div>');
+                var $busyIndicator = $('.busyIndicator', $element.parent());
+
+                // Get the layout values for the busyIndicator
+                var marginHorizontal = parseInt($element.css('marginLeft').replace('px', ''), 10) + parseInt($element.css('marginRight').replace('px', ''), 10);
+                var marginVertical = parseInt($element.css('marginTop').replace('px', ''), 10) + parseInt($element.css('marginBottom').replace('px', ''), 10);
+                var top = $element.position().top;
+                var left = $element.position().left;
+                var width = $element.outerWidth() + marginHorizontal;
+                var height = $element.outerHeight() + marginVertical;
+                var zIndex = parseInt($element.css('z-index'));
+                if (!zIndex) {
+                    zIndex = 8000;
+                }
+
+                $busyIndicator.css({
+                    position: 'absolute',
+                    'background-color': 'white',
+                    opacity: 0.8,
+                    top: top,
+                    left: left
+                });
+                $busyIndicator.css('z-index', zIndex + 1000);
+                $busyIndicator.width(width);
+                $busyIndicator.height(height);
+
+                $busyIndicator.activity(true);
+            }
+            else {
+                var $busyIndicator = $('.busyIndicator', $element.parent());
+                if ($busyIndicator.length > 0) {
+                    $busyIndicator.activity(false);
+                    $busyIndicator.remove();
+                }
+            }
+        }
+    }
+};

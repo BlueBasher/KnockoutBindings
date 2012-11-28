@@ -23,5 +23,11 @@
 }
 
 <div id="index-view">
-    <img style="height: 200px; width: 200px;" data-bind="imageLoader: {src: imageName, loadDelay: 3000, afterLoad: $root.imageLoaded}" />    
+    <img style="height: 200px; width: 200px;" data-bind="imageLoader: {src: imageName, loadDelay: 3000, afterLoad: $root.imageLoaded}" />
+    
+    <div style="height: 400px; width: 200px" data-bind="activityOverlay: showActivity">
+        <span>Demo overlay content</span>
+        <br />
+        <input type="button" data-bind="click: activityButtonClick" />
+    </div>    
 </div>

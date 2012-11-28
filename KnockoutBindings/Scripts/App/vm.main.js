@@ -11,5 +11,16 @@
         alert('loaded: ' + source);
     };
 
+
+    self.showActivity = ko.observable(false);
+
     // Public Methods
+    self.activityButtonClick = function () {
+        self.showActivity(true);
+
+        setTimeout(function () {
+            self.showActivity(false);
+        },
+        5000);
+    };
 };
